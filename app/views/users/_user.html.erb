@@ -1,5 +1,5 @@
 <li class="list-item mb-3 d-flex justify-content-between align-items-center">
-  <%= gravatar_for user %>
+  <%= profile_image_for user %>
   <%= link_to get_full_name_for(user), user %>
   <%= render "friend_request_button", user: user %>
 </li>

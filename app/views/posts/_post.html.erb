@@ -1,6 +1,6 @@
-<li class="card bg-light mb-3">
+<li class="post card bg-light mb-3">
   <div class="card-header">
-    <%= profile_image_for(post.user, class_name: "rounded-circle") %>
+    <%= profile_image_for(post.user, class_name: "author-img rounded-circle float-left mr-3") %>
     <h5 class="mb-0">
       <%= link_to get_full_name_for(post.user), post.user %>
     </h5>

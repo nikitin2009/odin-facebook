@@ -2,7 +2,7 @@
 (1..15).each do |i|
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
-  email = "user#{i}@mail.com"
+  email = "example-#{i}@railstutorial.org"
   password = "123456"
   User.create!(first_name: first_name, last_name: last_name, email: email, password: password)
 end
