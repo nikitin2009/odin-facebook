@@ -4,9 +4,15 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
   end
 
-  def profile_image_for(user, class_name: "")
+  def profile_image_for(user, class_name: "", large: false)
     alt = get_full_name_for(user)
-    src = user.image || gravatar_url(user)
+    if user.image
+      src = user.image
+      src += '?type=large' if large
+    else
+      src = gravatar_url(user)
+      src += '?s=200' if large
+    end
     image_tag(src, alt: alt, class: class_name)
   end
 
