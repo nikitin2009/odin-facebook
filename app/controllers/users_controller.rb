@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_current_user, only: [:me, :edit, :friends]
 
   def index
-    @users = User.all - current_user.friends
+    @users = User.all - current_user.friends - [current_user]
   end
 
   def me
