@@ -9,4 +9,12 @@ module UsersHelper
   def get_full_name_for(user)
     user.first_name + " " + user.last_name
   end
+
+  def profile_image_for(user)
+    if user.image
+      image_tag(user.image, alt: get_full_name_for(user))
+    else
+      gravatar_for user
+    end
+  end
 end
