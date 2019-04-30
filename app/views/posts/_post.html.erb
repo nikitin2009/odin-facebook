@@ -1,11 +1,15 @@
 <li class="card bg-light mb-3">
-  <div class="card-body">
+  <div class="card-header">
+    <%= profile_image_for(post.user, class_name: "rounded-circle") %>
     <h5 class="mb-0">
       <%= link_to get_full_name_for(post.user), post.user %>
     </h5>
     <small class="text-muted mb-2 d-block">
       posted <%= time_ago_in_words post.created_at %> ago
     </small>
+  </div>
+
+  <div class="card-body">
     <p><%= post.content %></p>
     <hr>
 
@@ -26,18 +30,18 @@
         <% end %>
       </div>
     </div>
+  </div>
 
-    <div class="commets-section ml-5">
+  <div class="card-footer">
+   <div class="commets-section ml-5">
       <% if post.comments.any? %>
-      <hr>
-        <h5>Comments:</h5>
-        <div class="comments">
+        <h5 class="text-uppercase">Comments:</h5>
+        <div class="comments mb-3">
           <ul class="list-group list-group-flush">
             <%= render post.comments %>
           </ul>
         </div>
       <% end %>
-      <hr>
       <%= form_for current_user.comments.build do |f| %>
         <%= f.hidden_field :post_id, value: post.id %>
         <div class="form-group">
@@ -47,6 +51,5 @@
         <%= f.submit "Add comment", class: "btn btn-secondary" %>
       <% end %>
     </div>
-
   </div>
 </li>
