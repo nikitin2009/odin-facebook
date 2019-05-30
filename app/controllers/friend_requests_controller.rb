@@ -1,7 +1,5 @@
 class FriendRequestsController < ApplicationController
   before_action :set_friend_request, only: [:accept, :decline, :destroy]
-  before_action :require_authorized_receiver, only: [:accept, :decline]
-  before_action :require_authorized_sender, only: [:destroy]
 
   def create
     @friend_request = current_user.requests_sent.build(friend_request_params)
@@ -15,7 +13,7 @@ class FriendRequestsController < ApplicationController
 
   def destroy
     @friend_request.destroy
-    flash[:succes] = "Successfuly deleted friend request"
+    flash[:success] = "Friend request removed"
     redirect_back(fallback_location: root_path)
   end
 
@@ -27,20 +25,6 @@ class FriendRequestsController < ApplicationController
 
   def set_friend_request
     @friend_request = FriendRequest.find(params[:id])
-  end
-
-  def require_authorized_receiver
-    unless @friend_request.receiver == current_user
-      flash[:danger] = "You're not authorized"
-      redirect_back(fallback_location: root_path)
-    end
-  end
-
-  def require_authorized_sender
-    unless @friend_request.sender == current_user
-      flash[:danger] = "You're not authorized"
-      redirect_back(fallback_location: root_path)
-    end
   end
 
 end
