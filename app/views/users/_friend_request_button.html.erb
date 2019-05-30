@@ -3,7 +3,6 @@
 <% else %>
   <%= form_for current_user.requests_sent.build do |f| %>
     <%= f.hidden_field :receiver_id, value: user.id %>
-    <%= f.hidden_field :status, value: 0 %>
     <%= f.submit "Add Friend", class: "btn btn-info" %>
   <% end %>
 <% end %>
