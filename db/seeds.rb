@@ -11,9 +11,8 @@ end
 first_user = User.first
 users = User.offset(1).take(5)
 
-first_user.friends << users
 users.each do |user|
-  user.friends << first_user
+  Friendship.create!(active_friend: first_user, passive_friend: user)
 end
 
 ## Generate Posts
