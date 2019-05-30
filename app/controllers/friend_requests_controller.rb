@@ -4,35 +4,13 @@ class FriendRequestsController < ApplicationController
   before_action :require_authorized_sender, only: [:destroy]
 
   def create
-    @friend_request = current_user.friend_requests_sent.build(friend_request_params)
-    @friend_request.status = 0
+    @friend_request = current_user.requests_sent.build(friend_request_params)
     if @friend_request.save
       flash[:success] = "Friend request sent"
     else
       flash[:danger] = "Some error occured"
     end
     redirect_back(fallback_location: root_path)
-  end
-
-  def accept
-    if @friend_request.update(status: 1)
-      @friend_request.sender.establish_friendship(@friend_request.receiver)
-      flash[:succes] = "You have accepted a friendship request!"
-      redirect_to me_friends_path
-    else
-      flash[:alert] = "There was some error occured on accepting a friend request!"
-      redirect_to me_friends_path
-    end
-  end
-
-  def decline
-    if @friend_request.update(status: -1)
-      flash[:succes] = "You have declined a friendship request!"
-      redirect_to me_friends_path
-    else
-      flash[:alert] = "There was some error occured on declining a friend request!"
-      redirect_to me_friends_path
-    end
   end
 
   def destroy

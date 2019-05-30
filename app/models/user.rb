@@ -27,6 +27,10 @@ class User < ApplicationRecord
   has_many :active_friends, through: :passive_friendships
   has_many :passive_friends, through: :active_friendships
 
+  def friends
+    active_friends + passive_friends
+  end
+
   def establish_friendship(other_user)
     begin
       self.friends.push(other_user)
@@ -51,7 +55,7 @@ class User < ApplicationRecord
   #ActionView::Template::Error: PG::SyntaxError: ERROR:  syntax error at or near ")"
   #LINE 1: SELECT "posts".* FROM "posts" WHERE (user_id IN ()
   def feed
-    friends_ids = self.friends.ids.join(',')
+    friends_ids = self.friends.map(&:id).join(',')
     unless friends_ids.blank?
       Post.where("user_id IN (#{friends_ids})
                 OR user_id = :user_id", user_id: id)

@@ -17,8 +17,8 @@
             <%= link_to 'My profile', current_user, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <% new_requests = current_user.friend_requests_received.pending.any? ?
-              "(#{current_user.friend_requests_received.pending.count})" :
+            <% new_requests = current_user.requests_received.any? ?
+              "(#{current_user.requests_received.count})" :
               "" %>
             <%= link_to "My friends#{new_requests}", me_friends_path, class: "nav-link" %>
           </li>
