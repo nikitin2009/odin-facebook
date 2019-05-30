@@ -14,17 +14,18 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  has_many :friend_requests_sent, foreign_key: :sender_id,
+  has_many :requests_sent, foreign_key: :sender_id,
             class_name: "FriendRequest", dependent: :destroy
 
-  has_many :friend_requests_received, foreign_key: :receiver_id,
+  has_many :requests_received, foreign_key: :receiver_id,
             class_name: "FriendRequest", dependent: :destroy
 
-  has_many :friendships, foreign_key: :user1_id, dependent: :destroy
-  has_many :friendships_2, class_name: "Friendship", foreign_key: :user2_id,
+  has_many :active_friendships, class_name: "Friendship", foreign_key: :active_friend_id, dependent: :destroy
+  has_many :passive_friendships, class_name: "Friendship", foreign_key: :passive_friend_id,
             dependent: :destroy
 
-  has_many :friends, through: :friendships, source: :user2
+  has_many :active_friends, through: :passive_friendships
+  has_many :passive_friends, through: :active_friendships
 
   def establish_friendship(other_user)
     begin
