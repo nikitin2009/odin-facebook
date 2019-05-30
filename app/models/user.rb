@@ -31,21 +31,6 @@ class User < ApplicationRecord
     active_friends + passive_friends
   end
 
-  def establish_friendship(other_user)
-    begin
-      self.friends.push(other_user)
-      other_user.friends.push(self)
-    rescue ActiveRecord::RecordNotUnique
-      self.errors.add(:friends, "You're already friends")
-      other_user.errors.add(:friends, "You're already friends")
-    end
-  end
-
-  def destroy_friendship(other_user)
-    self.friends.delete(other_user)
-    other_user.friends.delete(self)
-  end
-
   def liked_post?(post)
     self.likes.include?(Like.find_by(post_id: post.id))
   end
