@@ -5,10 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  validates :first_name, presence: true, length: { maximum: 20 },
-             format: { with: /[a-z]+/i, message: "must be alphabetically"}
-  validates :last_name, presence: true, length: { maximum: 20 },
-             format: { with: /[a-z]+/i, message: "must be alphabetically" }
+  validates :first_name, presence: true, length: { maximum: 20 }
+  validates :last_name, presence: true, length: { maximum: 20 }
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
