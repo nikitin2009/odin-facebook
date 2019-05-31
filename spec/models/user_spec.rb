@@ -37,20 +37,41 @@ RSpec.describe User, type: :model do
   end
 
   describe "instance methods" do
-    let(:john) { FactoryBot.create(:user) }
-    let(:mike) { FactoryBot.create(:user) }
-    let(:charles) { FactoryBot.create(:user) }
-    let(:rachel) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:user2) { FactoryBot.create(:user) }
+    let(:user3) { FactoryBot.create(:user) }
+    let(:user4) { FactoryBot.create(:user) }
+
+    let(:post) { FactoryBot.create(:post) }
+    let(:post2) { FactoryBot.create(:post) }
+    let(:post3) { FactoryBot.create(:post) }
 
     before do
-      FactoryBot.create(:friendship, active_friend: john, passive_friend: mike)
-      FactoryBot.create(:friendship, active_friend: charles, passive_friend: john)
-      FactoryBot.create(:friendship, active_friend: rachel, passive_friend: john)
+      FactoryBot.create(:friendship, active_friend: user, passive_friend: user2)
+      FactoryBot.create(:friendship, active_friend: user3, passive_friend: user)
+      FactoryBot.create(:friendship, active_friend: user4, passive_friend: user)
     end
 
     describe "#friends" do
       it "returns a user's complete set of friends" do
-        expect(john.friends.count).to be(3)
+        expect(user.friends.count).to be(3)
+      end
+    end
+
+    describe "#liked_post" do
+      it "returns true if user has liked a given post" do
+        post.likes.create(user: user)
+        expect(user.liked_post?(post)).to be(true)
+      end
+    end
+
+    describe "#feed" do
+      it "returns all posts from all friends of a user" do
+        user.posts << post
+        user2.posts << post2
+        user3.posts << post3
+        user4.active_friends += [user, user2, user3]
+        expect(user4.feed.count).to eq(3)
       end
     end
   end
