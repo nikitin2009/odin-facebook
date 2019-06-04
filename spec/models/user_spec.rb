@@ -36,6 +36,53 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "associations" do
+    it "has many Posts"do 
+      assc = User.reflect_on_association(:posts)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Comments"do 
+      assc = User.reflect_on_association(:comments)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Likes"do 
+      assc = User.reflect_on_association(:likes)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Requests sent"do 
+      assc = User.reflect_on_association(:requests_sent)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Requests received"do 
+      assc = User.reflect_on_association(:requests_received)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Active friendships"do 
+      assc = User.reflect_on_association(:active_friendships)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Passive friendships"do 
+      assc = User.reflect_on_association(:passive_friendships)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Active friends"do 
+      assc = User.reflect_on_association(:active_friends)
+      expect(assc.macro).to eq :has_many
+    end
+
+    it "has many Passive friends"do 
+      assc = User.reflect_on_association(:passive_friends)
+      expect(assc.macro).to eq :has_many
+    end
+  end
+
   describe "instance methods" do
     let(:user) { FactoryBot.create(:user) }
     let(:user2) { FactoryBot.create(:user) }
