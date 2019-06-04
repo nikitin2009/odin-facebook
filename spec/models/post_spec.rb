@@ -18,7 +18,7 @@ RSpec.describe Post, type: :model do
   end
 
   describe "associations" do
-    it "has belongs to User "do 
+    it "belongs to User "do 
       assc = Post.reflect_on_association(:user)
       expect(assc.macro).to eq :belongs_to
     end
