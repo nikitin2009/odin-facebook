@@ -9,4 +9,16 @@ RSpec.describe Comment, type: :model do
     end
   end
 
+  describe "associations" do
+    it "has belongs to User "do 
+      assc = Comment.reflect_on_association(:user)
+      expect(assc.macro).to eq :belongs_to
+    end
+
+    it "has belongs to Post "do 
+      assc = Comment.reflect_on_association(:post)
+      expect(assc.macro).to eq :belongs_to
+    end
+  end
+
 end
