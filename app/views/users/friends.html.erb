@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <% if @user.requests_received.any?  %>
+      <h2>New friend requests</h2>
+      <ul class="list-unstyled">
+        <% @user.requests_received.each do |request| %>
+          <li class="list-item mb-3 d-flex justify-content-between align-items-center">
+            <div>
+              <span class="mr-3"><%= profile_image_for request.sender %></span>
+              <%= link_to get_full_name_for(request.sender), request.sender %>
+            </div>
+            <div>
+              <%= button_to "Accept", friendships_path, 
+                    params: { request_id: request.id },
+                    class: 'btn btn-primary' %>
+              <%= link_to "Decline", friend_request_path(request), method: :delete, class: 'btn btn-alert' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if @user.friends.any?  %>
+      <h2>Your friends</h2>
+      <ul class="list-unstyled">
+        <% @user.friends.each do |friend| %>
+          <li class="list-item mb-3 d-flex justify-content-start align-items-center">
+            <span class="mr-3"><%= profile_image_for friend %></span>
+            <%= link_to get_full_name_for(friend), friend %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <h2>You have no friends :'(</h2>
+    <% end %>
+  </div>
+</div>

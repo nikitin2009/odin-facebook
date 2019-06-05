@@ -1,9 +1,9 @@
 # Generate Users
-50.times do
+(1..15).each do |i|
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
-  email = Faker::Internet.unique.email
-  password = "password"
+  email = "example-#{i}@railstutorial.org"
+  password = "123456"
   User.create!(first_name: first_name, last_name: last_name, email: email, password: password)
 end
 
@@ -11,9 +11,8 @@ end
 first_user = User.first
 users = User.offset(1).take(5)
 
-first_user.friends << users
 users.each do |user|
-  user.friends << first_user
+  Friendship.create!(active_friend: first_user, passive_friend: user)
 end
 
 ## Generate Posts
@@ -26,20 +25,16 @@ end
 # Generate Comments
 posts = Post.take(5)
 User.take(5).each do |user|
-  5.times do
-    posts.each do |post|
-      post.comments.create!(user: user, content: Faker::Lorem.paragraph_by_chars(150))
-    end
+  posts.each do |post|
+    post.comments.create!(user: user, content: Faker::Lorem.paragraph_by_chars(150))
   end
 end
 
 # Generate Likes
 posts = Post.take(5)
 User.take(5).each do |user|
-  5.times do
-    posts.each do |post|
-      post.likes.create!(user: user)
-    end
+  posts.each do |post|
+    post.likes.create!(user: user)
   end
 end
 

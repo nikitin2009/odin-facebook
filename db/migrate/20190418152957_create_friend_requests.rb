@@ -1,7 +1,6 @@
 class CreateFriendRequests < ActiveRecord::Migration[5.2]
   def change
     create_table :friend_requests do |t|
-      t.integer :status
       t.references :sender, references: :users
       t.references :receiver, references: :users
 

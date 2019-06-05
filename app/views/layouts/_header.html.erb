@@ -1,0 +1,40 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to 'Home', root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Find friends', users_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'My profile', current_user, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <% new_requests = current_user.requests_received.any? ?
+              "(#{current_user.requests_received.count})" :
+              "" %>
+            <%= link_to "My friends#{new_requests}", me_friends_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "nav-link") %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to('Login', new_user_session_path, class: "nav-link") %>
+          </li>
+          <li class="nav-item">
+            <%= link_to('Sign up', new_user_registration_path, class: "nav-link") %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>
+

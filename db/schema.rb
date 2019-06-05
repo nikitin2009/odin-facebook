@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_101955) do
+ActiveRecord::Schema.define(version: 2019_04_30_102452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_04_19_101955) do
   end
 
   create_table "friend_requests", force: :cascade do |t|
-    t.integer "status"
     t.bigint "sender_id"
     t.bigint "receiver_id"
     t.datetime "created_at", null: false
@@ -37,13 +36,13 @@ ActiveRecord::Schema.define(version: 2019_04_19_101955) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.bigint "user1_id"
-    t.bigint "user2_id"
+    t.bigint "active_friend_id"
+    t.bigint "passive_friend_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user1_id", "user2_id"], name: "index_friendships_on_user1_id_and_user2_id", unique: true
-    t.index ["user1_id"], name: "index_friendships_on_user1_id"
-    t.index ["user2_id"], name: "index_friendships_on_user2_id"
+    t.index ["active_friend_id", "passive_friend_id"], name: "index_friendships_on_active_friend_id_and_passive_friend_id", unique: true
+    t.index ["active_friend_id"], name: "index_friendships_on_active_friend_id"
+    t.index ["passive_friend_id"], name: "index_friendships_on_passive_friend_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -73,6 +72,9 @@ ActiveRecord::Schema.define(version: 2019_04_19_101955) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

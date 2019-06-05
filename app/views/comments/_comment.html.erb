@@ -1,0 +1,14 @@
+<li class="list-group-item">
+  <div class="commet-header">
+    <%= profile_image_for(comment.user, class_name: "author-img rounded-circle float-left mr-2") %>
+    <h6 class="mb-0">
+      <%= link_to get_full_name_for(comment.user), comment.user %>
+    </h6>
+    <small class="text-muted mb-2 d-block">
+      commented <%= time_ago_in_words comment.created_at %> ago
+    </small>
+  </div>
+  <p>
+    <%= comment.content %>
+  </p>
+</li>

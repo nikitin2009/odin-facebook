@@ -1,0 +1,8 @@
+<% if current_user.requests_sent.include? FriendRequest.where(sender_id: current_user.id, receiver_id: user.id).first %>
+  <button class="btn btn-info" disabled>Request sent</button>
+<% else %>
+  <%= form_for current_user.requests_sent.build do |f| %>
+    <%= f.hidden_field :receiver_id, value: user.id %>
+    <%= f.submit "Add Friend", class: "btn btn-info" %>
+  <% end %>
+<% end %>
