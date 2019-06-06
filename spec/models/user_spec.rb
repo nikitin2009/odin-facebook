@@ -114,11 +114,10 @@ RSpec.describe User, type: :model do
 
     describe "#feed" do
       it "returns all posts from all friends of a user" do
-        user.posts << post
+        user4.posts << post
         user2.posts << post2
         user3.posts << post3
-        user4.active_friends += [user, user2, user3]
-        expect(user4.feed.count).to eq(3)
+        expect(user.feed.count).to eq(3)
       end
     end
   end
