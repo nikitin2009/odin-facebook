@@ -16,19 +16,13 @@ RSpec.feature "User Adds A Friend", type: :feature do
   end
 
   scenario "User receives a friend request from another user" do
-    visit users_path
-    click_button "Add Friend"
-    click_link "Sign out"
-    sign_in_with @another_user
+    send_request_and_sign_in_with_another_user
 
     expect(page).to have_text("My friends(1)")
   end
 
   scenario "User accepts a friend request from another user" do
-    visit users_path
-    click_button "Add Friend"
-    click_link "Sign out"
-    sign_in_with @another_user
+    send_request_and_sign_in_with_another_user
     visit me_friends_path
     click_button "Accept"
 
@@ -36,10 +30,7 @@ RSpec.feature "User Adds A Friend", type: :feature do
   end
 
   scenario "User declines a friend request from another user" do
-    visit users_path
-    click_button "Add Friend"
-    click_link "Sign out"
-    sign_in_with @another_user
+    send_request_and_sign_in_with_another_user
     visit me_friends_path
     click_link "Decline"
 
@@ -51,5 +42,12 @@ RSpec.feature "User Adds A Friend", type: :feature do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_button 'Log in'
+  end
+
+  def send_request_and_sign_in_with_another_user
+    visit users_path
+    click_button "Add Friend"
+    click_link "Sign out"
+    sign_in_with @another_user
   end
 end

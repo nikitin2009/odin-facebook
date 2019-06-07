@@ -3,16 +3,18 @@ require 'rails_helper'
 RSpec.feature "Post Like Comment Creation", type: :feature do
 
   before do
+    @post = FactoryBot.build(:post)
+    @comment = FactoryBot.build(:comment)
     @current_user = FactoryBot.create(:user)
     sign_in_with @current_user
   end
 
   scenario "User creates a new post" do
     visit root_path
-    fill_in "Create new post:", with: "New post text"
+    fill_in "Create new post:", with: @post.content
     click_button "Create Post"
 
-    expect(page).to have_text("Successfuly created a post")
+    expect(page).to have_text(@post.content)
   end
 
   scenario "User likes a post" do
@@ -26,10 +28,10 @@ RSpec.feature "Post Like Comment Creation", type: :feature do
   scenario "User leaves a comment for a post" do
     FactoryBot.create(:post, user: @current_user)
     visit root_path
-    fill_in "Add your comment:", with: "A comment for the post"
+    fill_in "Add your comment:", with: @comment.content
     click_button "Add comment"
 
-    expect(page).to have_text("Comment created")
+    expect(page).to have_text(@comment.content)
   end
 
   def sign_in_with(user)
